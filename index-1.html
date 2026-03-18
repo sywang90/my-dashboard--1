@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>AI 数据多维看板</title>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 bg-slate-900 text-white p-6 hidden md:block">
+            <h1 class="text-2xl font-bold mb-10 text-blue-400">DataVision AI</h1>
+            <nav class="space-y-4">
+                <a href="#" class="block p-3 bg-blue-600 rounded-lg">📊 概览</a>
+                <a href="#" class="block p-3 hover:bg-slate-800 transition">📅 日报详情</a>
+                <a href="#" class="block p-3 hover:bg-slate-800 transition">📅 周报总结</a>
+                <a href="#" class="block p-3 hover:bg-slate-800 transition">📅 月报汇报</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-8">
+            <header class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-semibold">数据看板 <span class="text-sm font-normal text-gray-500">更新于：2026-03-17</span></h2>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">导出月报 PPT</button>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-gray-500 text-sm">今日销售额</p>
+                    <h3 class="text-2xl font-bold">￥12,840</h3>
+                    <span class="text-green-500 text-sm">↑ 12% vs 昨日</span>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-gray-500 text-sm">本周完成率 (周报)</p>
+                    <h3 class="text-2xl font-bold">85%</h3>
+                    <div class="w-full bg-gray-200 h-2 mt-2 rounded-full overflow-hidden">
+                        <div class="bg-blue-500 h-full" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-gray-500 text-sm">本月总营收 (月报)</p>
+                    <h3 class="text-2xl font-bold">￥42.5W</h3>
+                    <span class="text-blue-500 text-sm">KPI 达成率: 72%</span>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p class="text-gray-500 text-sm">活跃用户 (实时)</p>
+                    <h3 class="text-2xl font-bold text-orange-500">1,204</h3>
+                    <span class="animate-pulse inline-block w-2 h-2 bg-green-500 rounded-full mr-1"></span><span class="text-xs">实时在线</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h4 class="font-bold mb-4">月度收入趋势 (月报维度)</h4>
+                    <canvas id="monthlyChart" height="200"></canvas>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h4 class="font-bold mb-4">本周任务进度 (周报维度)</h4>
+                    <canvas id="weeklyChart" height="200"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 月报趋势图
+        const ctx1 = document.getElementById('monthlyChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                datasets: [{
+                    label: '月营收 (万元)',
+                    data: [30, 45, 42, 50, 65, 58],
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.4
+                }]
+            }
+        });
+
+        // 周报柱状图
+        const ctx2 = document.getElementById('weeklyChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                datasets: [{
+                    label: '新增客户数',
+                    data: [65, 59, 80, 81, 56, 40, 30],
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
